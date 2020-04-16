@@ -49,7 +49,8 @@ class PostController extends AbstractController
         $otherPosts = $postRepository->getOtherPosts($id, $post->getUser());
 
         return $this->render('post/show.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'otherPosts' => $otherPosts
         ]);
     }
 }

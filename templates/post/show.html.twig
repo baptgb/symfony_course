@@ -6,6 +6,21 @@
     <h5>Ajouté le {{ post.createdAt|date('d/m/Y') }} par {{ post.user.username }}</h5>
     <p>{{ post.content }}</p>
     <hr>
+    <h3>Commentaires</h3>
+    <form action="{{ path('post_show', {id: post.id}) }}" method="post">
+        Contenu du commentaire : <textarea name="content" id="" cols="30" rows="10"></textarea>
+        <select name="user" id="">
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Commenter">
+    </form>
+    {% for comment in comments %}
+        <p>{{ comment.content }}</p>
+        <small>Par {{ comment.user.username }} le {{ comment.createdAt|date('d/m/Y H:i:s') }}</small>
+    {% endfor %}
+    <hr>
     <h3>Autres posts par {{ post.user.username }}</h3>
     {% for post in otherPosts %}
         <a href="{{ path('post_show', {id: post.id}) }}"{{ post.title }}></a>

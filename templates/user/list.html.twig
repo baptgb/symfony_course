@@ -5,7 +5,15 @@
     {% for user in users %}
         <p>{{ user.username }}</p>
         {% for post in user.posts %}
-            <p><a href="{{ path('post_show', {id: post.id}) }}">{{ post.title }}</a></p>
+
+            {% set nbComments = 0 %}
+            {% for commentCount in commentsCount %}
+                {% if commentCount['post_id'] == post.id %}
+                    {% set nbComments = commentCount['nb_comments'] %}
+                {% endif %}
+            {% endfor %}
+
+            <p><a href="{{ path('post_show', {id: post.id}) }}">{{ post.title }}</a> ({{ nbComments }} commentaires)</p>
         {% endfor %}
     {% endfor %}
 {% endblock %}

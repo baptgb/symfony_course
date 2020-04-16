@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Comment;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +18,12 @@ class UserController extends AbstractController
     {
         $userRepository = $this->getDoctrine()->getRepository(User::class);
         $users = $userRepository->findAll();
+        $commentRepository = $this->getDoctrine()->getRepository(Comment::class);
+        $commentsCount = $commentRepository->getCommentsCountGroupByPost();
+
         return $this->render('user/list.html.twig', [
-            'users' => $users
+            'users' => $users,
+            'commentsCount' => $commentsCount
         ]);
     }
 

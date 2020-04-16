@@ -50,6 +50,11 @@ class Post
     private $user;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="post")
+     */
+    private $comments;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -122,6 +127,11 @@ class Post
         $this->user = $user;
 
         return $this;
+    }
+
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
 

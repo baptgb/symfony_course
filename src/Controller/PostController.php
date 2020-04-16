@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Comment;
 use App\Entity\Post;
 use App\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,9 +49,30 @@ class PostController extends AbstractController
 
         $otherPosts = $postRepository->getOtherPosts($id, $post->getUser());
 
+        $userRepository = $this->getDoctrine()->getRepository(User::class);
+
+        if ($request->request->has('content') && $request->request->has('user')) {
+            $user = $userRepository->find($request->request->get('user'));
+            $comment = new Comment();
+            $comment->setContent($request->request->get('content'));
+            $comment->setCreatedAt(new \DateTime());
+            $comment->setPost($post);
+            $comment->setUser($user);
+
+            $this->getDoctrine()->getManager()->persist($comment);
+            $this->getDoctrine()->getManager()->flush();
+        }
+
+        $commentRepository = $this->getDoctrine()->getRepository(Comment::class);
+        $comments = $commentRepository->findBy(['post' => $id], ['createdAt' => 'DESC']);
+
+        $users = $userRepository->findAll();
+
         return $this->render('post/show.html.twig', [
             'post' => $post,
-            'otherPosts' => $otherPosts
+            'otherPosts' => $otherPosts,
+            'comments' => $comments,
+            'users' => $users
         ]);
     }
 }

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <form action="{{ path('user_register') }}" method="post">
+        <input type="text" name="username">
+        <input type="text" name="firstname">
+        <input type="text" name="lastname">
+        <input type="submit" value="Créer mon compte">
+    </form>
+{% endblock %}

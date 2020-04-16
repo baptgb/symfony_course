@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>{{ post.title }}</h1>
+    <h5>Ajouté le {{ post.createdAt|date('d/m/Y') }} par {{ post.user.username }}</h5>
+    <p>{{ post.content }}</p>
+    <hr>
+    <h3>Autres posts par {{ post.user.username }}</h3>
+    {% for post in otherPosts %}
+        <a href="{{ path('post_show', {id: post.id}) }}"{{ post.title }}></a>
+    {% endfor %}
+{% endblock %}

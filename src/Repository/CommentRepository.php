@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Comment;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -26,5 +27,20 @@ class CommentRepository extends ServiceEntityRepository
             ->join('c.post', 'p')
             ->groupBy('p.id')
             ->getQuery()->getArrayResult();
+    }
+
+    /**
+     * SELECT COUNT(*) FROM `comment` AS c
+    INNER JOIN post AS p ON p.id = c.post_id
+    WHERE p.user_id = 1
+     */
+    public function countCommentsByPostUser(User $user)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->innerJoin('c.post', 'p')
+            ->where('p.user = :user')
+            ->setParameter(':user', $user)
+            ->getQuery()->getSingleScalarResult();
     }
 }

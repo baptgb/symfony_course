@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <h1>Profil de {{ user.username }}</h1>
+    <p>Utilisateur créé le : {{ user.createdAt|date('Y-m-d H:i:s') }}</p>
+    <p>Nombre de posts : {{ postsCount }}</p>
+    <p>Nombre de commentaires reçus : {{ commentsCount }}</p>
+{% endblock %}

@@ -68,7 +68,7 @@ class AppLoginFormAuthenticator extends AbstractFormLoginAuthenticator
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Vos identifiants sont invalides');
+            throw new CustomUserMessageAuthenticationException('Vos identifiants sont invalides, veuillez ressayer');
         }
 
         return $user;

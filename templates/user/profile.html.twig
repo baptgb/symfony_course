@@ -6,4 +6,13 @@
     <p>Utilisateur créé le : {{ user.createdAt|date('Y-m-d H:i:s') }}</p>
     <p>Nombre de posts : {{ postsCount }}</p>
     <p>Nombre de commentaires reçus : {{ commentsCount }}</p>
+
+    <hr>
+
+    <form action="{{ path('user_profile', {id: user.id}) }}" method="post">
+        Username: <input type="text" name="username">
+        Firstname: <input type="text" name="firstname">
+        Lastname: <input type="text" name="lastname">
+        <input type="submit" value="Modifier">
+    </form>
 {% endblock %}

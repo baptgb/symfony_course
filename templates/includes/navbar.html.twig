@@ -1,0 +1,8 @@
+<nav>
+    <a href="{{ path('user_list') }}">Accueil</a>
+    <a href="{{ path('user_register') }}">Nouvel utilisateur</a>
+    <a href="{{ path('contact') }}">Contact</a>
+    {% if app.user %}
+        <span>Vous êtes connecté (<a href="{{ path('user_profile', {id: app.user.id}) }}">{{ app.user.username }}</a>)</span>
+    {% endif %}
+</nav>

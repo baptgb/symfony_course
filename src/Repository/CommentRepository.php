@@ -30,17 +30,17 @@ class CommentRepository extends ServiceEntityRepository
     }
 
     /**
-     * SELECT COUNT(*) FROM `comment` AS c
-    INNER JOIN post AS p ON p.id = c.post_id
-    WHERE p.user_id = 1
+     * SELECT * FROM `comment`
+     * INNER JOIN user ON comment.user_id = user.id
+     * WHERE user.username = 'bob'
      */
-    public function countCommentsByPostUser(User $user)
+    public function getByUsername($username)
     {
         return $this->createQueryBuilder('c')
-            ->select('COUNT(c.id)')
-            ->innerJoin('c.post', 'p')
-            ->where('p.user = :user')
-            ->setParameter(':user', $user)
-            ->getQuery()->getSingleScalarResult();
+            ->join('c.user', 'u')
+            ->where('u.username = :username')
+            ->setParameter(':username', $username)
+            ->getQuery()
+            ->getResult();
     }
 }

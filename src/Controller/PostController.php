@@ -49,10 +49,8 @@ class PostController extends AbstractController
 
         $otherPosts = $postRepository->getOtherPosts($id, $post->getUser());
 
-        $userRepository = $this->getDoctrine()->getRepository(User::class);
-
-        if ($request->request->has('content') && $request->request->has('user')) {
-            $user = $userRepository->find($request->request->get('user'));
+        $user = $this->getUser();
+        if ($request->request->has('content') && $user instanceof User) {
             $comment = new Comment();
             $comment->setContent($request->request->get('content'));
             $comment->setCreatedAt(new \DateTime());
@@ -66,13 +64,10 @@ class PostController extends AbstractController
         $commentRepository = $this->getDoctrine()->getRepository(Comment::class);
         $comments = $commentRepository->findBy(['post' => $id], ['createdAt' => 'DESC']);
 
-        $users = $userRepository->findAll();
-
         return $this->render('post/show.html.twig', [
             'post' => $post,
             'otherPosts' => $otherPosts,
             'comments' => $comments,
-            'users' => $users
         ]);
     }
 }

@@ -10,6 +10,14 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+        api:
+            pattern: ^/api/
+            anonymous: true
+            stateless: true
+            provider: my_user_provider
+            guard:
+                authenticators:
+                    - App\Security\AppApiKeyAuthenticator
         main:
             anonymous: lazy
             provider: my_user_provider
@@ -30,5 +38,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        #- { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/api/, roles: ROLE_USER }
